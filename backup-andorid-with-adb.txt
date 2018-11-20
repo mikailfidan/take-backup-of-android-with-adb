@@ -1,0 +1,43 @@
+take full backup of android with adb
+sda  is equal mmcblok0
+
+#Active USB Debug on Android Phone
+
+#View linked devices
+-adb devices
+
+#View partitions
+-ls -la /dev/block/platform/soc/624000.ufshc/by-name/
+or
+-cat /proc/partitions
+or
+ls -la /dev/block/
+
+
+#if you have sdcard use this command
+dd if=/dev/block/mmcblk0 of=/sdcard/mmcblk0_image.img
+or
+adb pull /dev/block/sda /sdacard/sda.img
+
+#If you haven't an sdcard and for save to your computer
+adb shell su -c "cat /dev/block/sda" | pv > sda.raw
+or
+with netcat
+-
+ run on the adb shell
+dd if=/dev/block/sda bs=64k | gzip | nc -l -p 3333
+ run on computer 
+nc localhost 33333 | pv -i 0.5 --size 53g > sda.raw.gz
+
+-use "pv"  for view process
+
+
+resources
+https://www.linuxquestions.org/questions/linux-server-73/dd-with-netcat-restoring-images-935273/
+https://stackoverflow.com/questions/13578416/read-binary-stdout-data-from-adb-shell
+https://roubert.name/joakim/androidfilerecovery/
+https://stackoverflow.com/questions/29442630/copy-full-disk-image-from-android-to-computer
+
+
+
+
