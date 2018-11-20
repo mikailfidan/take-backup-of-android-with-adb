@@ -1,5 +1,5 @@
 take full backup of android with adb
-sda  is equal mmcblok0
+sda  is equal mmcblk0
 
 #Active USB Debug on Android Phone
 
